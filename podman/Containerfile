@@ -1,0 +1,18 @@
+FROM quay.io/centos/centos:stream9
+
+RUN dnf -y install 'dnf-command(config-manager)' && \
+    dnf -y config-manager --set-enabled crb && \
+    dnf -y install epel-release epel-next-release
+
+RUN dnf -y install \
+        rsync \
+        patch \
+        git
+
+RUN dnf -y install \
+        python3-dnf \
+        python3-requests \
+        python3-bugzilla \
+        python3-jinja2 \
+        koji \
+        util-linux

@@ -1,0 +1,3 @@
+[submodule "src/tdawson-misc-scripts"]
+	path = src/tdawson-misc-scripts
+	url = https://github.com/tdawson/tdawson-misc-scripts.git
