@@ -12,16 +12,34 @@ permissions:
   contents: write
 
 jobs:
-  gen-pages:
+  get-src:
     runs-on: ubuntu-latest
-    container:
-      image: quay.io/podman/stable:latest
-      options: --privileged
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: true
+
+    - name: Upload source
+      uses: actions/upload-artifact@v4
+      with:
+        name: willit-source
+        path: ./*
+        retention-days: 1
+
+  gen-pages:
+    runs-on: ubuntu-latest
+    needs: get-src
+    container:
+      image: quay.io/podman/stable:latest
+      options: --privileged
+
+    steps:
+    - name: Download source files
+      uses: actions/download-artifact@v4
+      with:
+        name: willit-source
+        path: '.'
 
     - name: Get image from cache
       id: image-cache
@@ -34,13 +52,14 @@ jobs:
     - name: Build Podman Image
       if: steps.image-cache.outputs.cache-hit != 'true'
       run: |
-        ./build_image.sh
-        podman save willit-deploy > image/willit-deploy.tar
+        bash ./build_image.sh
+        mkdir -p ./image
+        podman save willit-deploy > ./image/willit-deploy.tar
 
     - name: Run process
       run: |
         podman load -i ./image/willit-deploy.tar
-        ./deploy.sh
+        bash ./deploy.sh
 
     - name: Upload output
       uses: actions/upload-artifact@v4

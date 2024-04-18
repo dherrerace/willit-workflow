@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-set -e
+set -ex
 
 mkdir -p $(pwd)/output
 mkdir -p $(pwd)/patches
