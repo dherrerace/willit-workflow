@@ -1,0 +1,50 @@
+name: Weekly Build
+
+on:
+  schedule: # for scheduling to work this file must be in the default branch
+  - cron: "0 0 * * 3" # repeat every Wednesday
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  gen-pages:
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/podman/stable:latest
+      options: --privileged
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Get image from cache
+      id: image-cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ./image/willit-deploy.tar
+        key: container-${{ hashFiles('./podman/Containerfile') }}
+
+    - name: Build Podman Image
+      if: steps.image-cache.outputs.cache-hit != 'true'
+      run: |
+        ./build_image.sh
+        podman save willit-deploy > image/willit-deploy.tar
+
+    - name: Run process
+      run: |
+        podman load -i ./image/willit-deploy.tar
+        ./deploy.sh
+
+    - name: Upload output
+      uses: actions/upload-artifact@v4
+      with:
+        name: willit-output
+        path: ./output/*
+        retention-days: 1
