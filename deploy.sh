@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-set -ex
+set -x
 
 mkdir -p $(pwd)/output
 mkdir -p $(pwd)/patches
@@ -17,8 +17,11 @@ podman run -ti --rm \
     -v $(pwd)/src/tdawson-misc-scripts:/opt/orig/tdawson-misc-scripts/:ro,Z \
     -w /opt \
     willit-deploy:latest \
-    bash /opt/scripts/build.sh || true
+    bash /opt/scripts/build.sh
+CONTAINER_RESULT=$?
 
 if [ "$EUID" -ne 0 ]; then
     podman unshare chown 0:0 -R $(pwd)/output
 fi
+
+exit $CONTAINER_RESULT
