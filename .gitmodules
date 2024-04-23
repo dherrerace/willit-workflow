@@ -1,3 +1,3 @@
-[submodule "src/tdawson-misc-scripts"]
-	path = src/tdawson-misc-scripts
-	url = https://github.com/tdawson/tdawson-misc-scripts.git
+[submodule "src/willit"]
+	path = src/willit
+	url = https://github.com/tdawson/willit.git

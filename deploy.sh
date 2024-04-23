@@ -14,7 +14,7 @@ podman run -ti --rm \
     -v $(pwd)/patches:/opt/patches/:ro,Z \
     -v $(pwd)/scripts/:/opt/scripts/:ro,Z \
     -v $(pwd)/.git:/opt/.git/:ro,Z \
-    -v $(pwd)/src/tdawson-misc-scripts:/opt/orig/tdawson-misc-scripts/:ro,Z \
+    -v $(pwd)/src/willit:/opt/orig/willit/:ro,Z \
     -w /opt \
     willit-deploy:latest \
     bash /opt/scripts/build.sh

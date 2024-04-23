@@ -8,7 +8,7 @@ find /opt/output/ -mindepth 1 -maxdepth 1 -exec rm -r -- {} +
 # Setup srcs
 cd /opt
 mkdir -p src
-rsync -azh /opt/orig/tdawson-misc-scripts/ /opt/src/tdawson-misc-scripts/
+rsync -azh /opt/orig/willit/ /opt/src/willit/
 
 # Apply patches
 if [ ! -z "./patches" ]; then
@@ -25,10 +25,8 @@ if [ ! -z "./patches" ]; then
 fi
 
 # Build
-cd /opt/src/tdawson-misc-scripts/willit/
+cd /opt/src/willit/
 
 python3 willit.py
-bash willit-fix-dates.sh
-python3 willit-fix-dates.py
 
-rsync -azh /opt/src/tdawson-misc-scripts/willit/output/ /opt/output/willit/
+rsync -azh /opt/src/willit/output/ /opt/output/willit/
