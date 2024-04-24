@@ -141,3 +141,32 @@ jobs:
         name: willit-output
         path: ./output/*
         retention-days: 1
+
+  update-website:
+    runs-on: ubuntu-latest
+    needs: merge-repo-pages
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 'gh-pages'
+        path: 'gh-pages'
+
+    - name: Download output files
+      uses: actions/download-artifact@v4
+      with:
+        name: willit-output
+        path: 'willit-output'
+    
+    - name: Sync web changes
+      run: |
+        mv willit-output/status-overall.html willit-output/index.html
+        mkdir -p gh-pages/docs/
+        rsync -azhuv --delete-after willit-output/ gh-pages/docs/
+
+    - name: Commit report
+      run: |
+        git config --global user.name 'Sync Process'
+        git config --global user.email 'sync-bot@users.noreply.github.com'
+        git -C gh-pages commit -am "Sync pages"
+        git -C gh-pages push
