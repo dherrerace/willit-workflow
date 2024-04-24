@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Will It Install on epel8-next</title>
+    <style>
+      table {
+        border-spacing: 0;
+      }
+      th, td {
+        text-align: center;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>Will It Install on epel8-next</h1>
+    <p>
+      <a href="status-repo.html">Repo Status</a> - 
+      <a href="../status-overall.html">Overall Status</a>
+      <br>Page updated: 2024-04-24 22:36
+    </p>
+  <h2>epel8-next</h2>
+
+    <h3>Packages that will not install</h3>
+    <ul>
+      <li><a href="packages/cachelib.html">cachelib-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next</a> (2024-04-24)</li>
+      <li><a href="packages/cachelib.html">cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next</a> (2024-04-24)</li>
+      </ul>
+
+    <h3>Errors when install is tried</h3>
+
+    <p>Package: <a href="packages/cachelib.html">cachelib-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next</a> (2024-04-24)
+      <br>Error: 
+ Problem: conflicting requests
+  - nothing provides libgflags.so.2.2()(64bit) needed by cachelib-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next
+      </p>
+    <p>Package: <a href="packages/cachelib.html">cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next</a> (2024-04-24)
+      <br>Error: 
+ Problem: package cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next requires libcachelib_allocator.so.16()(64bit), but none of the providers can be installed
+  - package cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next requires libcachelib_cachebench.so.16()(64bit), but none of the providers can be installed
+  - package cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next requires libcachelib_common.so.16()(64bit), but none of the providers can be installed
+  - package cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next requires libcachelib_datatype.so.16()(64bit), but none of the providers can be installed
+  - package cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next requires libcachelib_navy.so.16()(64bit), but none of the providers can be installed
+  - package cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next requires libcachelib_shm.so.16()(64bit), but none of the providers can be installed
+  - package cachelib-devel-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next requires cachelib(x86-64) = 16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides libgflags.so.2.2()(64bit) needed by cachelib-16-4.20211220gitc4904ef.20211229gitc4904ef.el8.next.x86_64 from epel8-next
+      </p>
+    
+
+  <h2>epel8-next-testing</h2>
+
+    <h3>Packages that will not install</h3>
+    <ul>
+      <li><a href="packages/python3-rpm.html">python3.12-rpm-4.14.3-31.2.el8.next</a> ()</li>
+      </ul>
+
+    <h3>Errors when install is tried</h3>
+
+    <p>Package: <a href="packages/python3-rpm.html">python3.12-rpm-4.14.3-31.2.el8.next</a> ()
+      <br>Error: 
+ Problem: conflicting requests
+  - nothing provides (rpm-libs(x86-64) >= 4.14.3-31 with rpm-libs(x86-64) < 4.14.3-32) needed by python3.12-rpm-4.14.3-31.2.el8.next.x86_64 from epel8-nexttesting
+  - nothing provides python(abi) = 3.12 needed by python3.12-rpm-4.14.3-31.2.el8.next.x86_64 from epel8-nexttesting
+      </p>
+    
+
+  </body>
+</html>

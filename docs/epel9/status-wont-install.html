@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Will It Install on epel9</title>
+    <style>
+      table {
+        border-spacing: 0;
+      }
+      th, td {
+        text-align: center;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>Will It Install on epel9</h1>
+    <p>
+      <a href="status-repo.html">Repo Status</a> - 
+      <a href="../status-overall.html">Overall Status</a>
+      <br>Page updated: 2024-04-24 22:35
+    </p>
+  <h2>epel9</h2>
+
+    <h3>Packages that will not install</h3>
+    <ul>
+      <li><a href="packages/applet-window-buttons.html">applet-window-buttons-0.11.1-4.el9</a> (2024-04-24)</li>
+      <li><a href="packages/arch-install-scripts.html">arch-install-scripts-28-2.el9</a> (2024-04-24)</li>
+      </ul>
+
+    <h3>Errors when install is tried</h3>
+
+    <p>Package: <a href="packages/applet-window-buttons.html">applet-window-buttons-0.11.1-4.el9</a> (2024-04-24)
+      <br>Error: 
+ Problem: conflicting requests
+  - nothing provides libkdecorations2private.so.9()(64bit) needed by applet-window-buttons-0.11.1-4.el9.x86_64 from epel9
+      </p>
+    <p>Package: <a href="packages/arch-install-scripts.html">arch-install-scripts-28-2.el9</a> (2024-04-24)
+      <br>Error: 
+ Problem: conflicting requests
+  - nothing provides archlinux-keyring needed by arch-install-scripts-28-2.el9.noarch from epel9
+      </p>
+    
+
+  <h2>epel9-testing</h2>
+
+    <h3>Packages that will not install</h3>
+    <ul>
+      <li><a href="packages/libarrow.html">parquet-glib-devel-9.0.0-11.el9</a> ()</li>
+      </ul>
+
+    <h3>Errors when install is tried</h3>
+
+    <p>Package: <a href="packages/libarrow.html">parquet-glib-devel-9.0.0-11.el9</a> ()
+      <br>Error: 
+ Problem: conflicting requests
+  - nothing provides parquet-devel(x86-64) = 9.0.0-10.el9 needed by parquet-glib-devel-9.0.0-10.el9.x86_64 from epel9
+  - nothing provides parquet-devel(x86-64) = 9.0.0-11.el9 needed by parquet-glib-devel-9.0.0-11.el9.x86_64 from epel9testing
+      </p>
+    
+
+  </body>
+</html>

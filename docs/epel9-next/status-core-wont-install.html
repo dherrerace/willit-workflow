@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Will It Install epel9 on CentOS Stream</title>
+    <style>
+      table {
+        border-spacing: 0;
+      }
+      th, td {
+        text-align: center;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>Will It Install on epel9 on CentOS Stream</h1>
+    <p>
+      <a href="status-repo.html">Repo Status</a> - 
+      <a href="../status-overall.html">Overall Status</a>
+      <br>Page updated: 2024-04-24 22:43
+    </p>
+  <h2>epel9</h2>
+
+    <h3>Packages that will not install on CentOS Stream</h3>
+    <ul>
+      <li><a href="packages/autokey.html">autokey-qt-0.96.0-1.el9</a> (2024-04-24)</li>
+      <li><a href="packages/rust-bat.html">rust-bat+lessopen-devel-0.24.0-3.el9</a> (2024-04-24)</li>
+      </ul>
+
+    <h3>Errors when install is tried</h3>
+
+    <p>Package: <a href="packages/autokey.html">autokey-qt-0.96.0-1.el9</a> (2024-04-24)
+      <br>Error: 
+ Problem: conflicting requests
+  - nothing provides python3-qscintilla-qt5 needed by autokey-qt-0.96.0-1.el9.noarch from epel9
+      </p>
+    <p>Package: <a href="packages/rust-bat.html">rust-bat+lessopen-devel-0.24.0-3.el9</a> (2024-04-24)
+      <br>Error: 
+ Problem: package rust-bat+lessopen-devel-0.24.0-3.el9.noarch from epel9 requires crate(bat/run_script) = 0.24.0, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides (crate(run_script/default) >= 0.10.0 with crate(run_script/default) < 0.11.0~) needed by rust-bat+run_script-devel-0.24.0-3.el9.noarch from epel9
+      </p>
+    </body>
+</html>
