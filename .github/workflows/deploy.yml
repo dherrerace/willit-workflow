@@ -31,6 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-src
     strategy:
+      fail-fast: false
       matrix:
         repo: ${{ fromJson(needs.get-src.outputs.repos) }}
     container:
