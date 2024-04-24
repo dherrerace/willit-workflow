@@ -25,7 +25,11 @@ jobs:
     - name: Get repo names
       id: get-repo-names
       run: |
-        echo "repos=$(jq -c '[.repos[].RepoName]' src/willit/willit-config.json)" >> "$GITHUB_OUTPUT"
+        echo "repos=$( \
+            jq -c \
+              '[.repos[].RepoName | select( contains("-next") == false )]' \
+              src/willit/willit-config.json \
+          )" >> "$GITHUB_OUTPUT"
 
   gen-pages:
     runs-on: ubuntu-latest
@@ -50,7 +54,7 @@ jobs:
     - name: Filter config file
       run: |
         cat <<< $( \
-            jq '{ repos:[.repos[] | select( .RepoName == "${{ matrix.repo }}" ) ]}' \
+            jq '{ repos:[.repos[] | select( .RepoName | contains("${{ matrix.repo }}") ) ]}' \
             src/willit/willit-config.json \
           ) > src/willit/willit-config.json
     - name: Get image from cache
