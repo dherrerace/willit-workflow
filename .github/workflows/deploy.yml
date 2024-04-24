@@ -12,32 +12,10 @@ permissions:
   contents: write
 
 jobs:
-  get-src:
+  prepare-repo-env:
     runs-on: ubuntu-latest
     outputs:
       repos: ${{ steps.get-repo-names.outputs.repos }}
-
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: true
-
-    - name: Get repo names
-      id: get-repo-names
-      run: |
-        echo "repos=$( \
-            jq -c \
-              '[.repos[].RepoName | select( contains("-next") == false )]' \
-              src/willit/willit-config.json \
-          )" >> "$GITHUB_OUTPUT"
-
-  gen-pages:
-    runs-on: ubuntu-latest
-    needs: get-src
-    strategy:
-      fail-fast: false
-      matrix:
-        repo: ${{ fromJson(needs.get-src.outputs.repos) }}
     container:
       image: quay.io/podman/stable:latest
       options: --privileged
@@ -45,18 +23,12 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        dnf -y install jq git
+        dnf -y install jq git nodejs
 
     - uses: actions/checkout@v4
       with:
         submodules: true
 
-    - name: Filter config file
-      run: |
-        cat <<< $( \
-            jq '{ repos:[.repos[] | select( .RepoName | contains("${{ matrix.repo }}") ) ]}' \
-            src/willit/willit-config.json \
-          ) > src/willit/willit-config.json
     - name: Get image from cache
       id: image-cache
       uses: actions/cache@v4
@@ -72,14 +44,100 @@ jobs:
         mkdir -p ./image
         podman save willit-deploy > ./image/willit-deploy.tar
 
+    - name: Get repo names
+      id: get-repo-names
+      run: |
+        echo "repos=$( \
+            jq -c \
+              '[.repos[].RepoName | select( contains("-next") == false )]' \
+              src/willit/willit-config.json \
+          )" >> "$GITHUB_OUTPUT"
+
+  gen-repo-pages:
+    runs-on: ubuntu-latest
+    needs: prepare-repo-env
+    strategy:
+      fail-fast: false
+      matrix:
+        repo: ${{ fromJson(needs.prepare-repo-env.outputs.repos) }}
+    container:
+      image: quay.io/podman/stable:latest
+      options: --privileged
+
+    steps:
+    - name: Install dependencies
+      run: |
+        dnf -y install jq git nodejs
+
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Filter config file
+      run: |
+        cat <<< $( \
+            jq '{ repos:[.repos[] | select( .RepoName | contains("${{ matrix.repo }}") ) ]}' \
+            src/willit/willit-config.json \
+          ) > src/willit/willit-config.json
+
+    - name: Get image from cache
+      id: image-cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ./image/willit-deploy.tar
+        key: container-${{ hashFiles('./podman/Containerfile') }}
+
     - name: Run process
       run: |
         podman load -i ./image/willit-deploy.tar
         bash ./deploy.sh
 
     - name: Upload output
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: willit-output-${{ matrix.repo }}
+        name: output-${{ matrix.repo }}
+        path: ./output/*
+        retention-days: 1
+
+  merge-repo-pages:
+    runs-on: ubuntu-latest
+    needs: gen-repo-pages
+    container:
+      image: quay.io/podman/stable:latest
+      options: --privileged
+
+    steps:
+    - name: Install dependencies
+      run: |
+        dnf -y install jq git nodejs
+
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Download repos output
+      uses: actions/download-artifact@v4
+      with:
+        path: .
+
+    - name: Get image from cache
+      id: image-cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ./image/willit-deploy.tar
+        key: container-${{ hashFiles('./podman/Containerfile') }}
+
+    - name: Run merge process
+      run: |
+        rm src/willit/willit-config.json
+        podman load -i ./image/willit-deploy.tar
+        bash ./deploy.sh
+
+    - name: Upload output
+      uses: actions/upload-artifact@v4
+      with:
+        name: willit-output
         path: ./output/*
         retention-days: 1
