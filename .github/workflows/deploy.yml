@@ -163,6 +163,7 @@ jobs:
         mv willit-output/status-overall.html willit-output/index.html
         mkdir -p gh-pages/docs/
         rsync -azhuv --delete-after willit-output/ gh-pages/docs/
+        git -C gh-pages add .
 
     - name: Commit report
       run: |
