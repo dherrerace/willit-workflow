@@ -1,5 +1,5 @@
 diff --git a/willit.py b/willit.py
-index 12db4d0..979e750 100755
+index 12db4d0..2289388 100755
 --- a/willit.py
 +++ b/willit.py
 @@ -304,7 +304,8 @@ for this_repo in input_config['repos']:
@@ -12,16 +12,18 @@ index 12db4d0..979e750 100755
      print("      Failed Installs: " + str(len(ci_bad_binary)))
      this_overall["ci_bnumber_good"] = this_overall["bnumber"] - len(ci_bad_binary)
      this_overall["ci_bnumber_bad"] = len(ci_bad_binary)
-@@ -354,6 +355,8 @@ for this_repo in input_config['repos']:
+@@ -354,6 +355,10 @@ for this_repo in input_config['repos']:
                    this_source['binaries'] = old_core_repo["spkg_list"][sourcename]['binaries']
                    this_source['bad_installs'][binarynvr] = bbinary
                    core_spkg_list[sourcename] = this_source
 +              if len(ci_core_bad_binary) >= 2:
 +                break
++          if len(ci_core_bad_binary) >= 2:
++            break
  
        print("      Failed Core Installs: " + str(len(ci_core_bad_binary)))
        this_overall["core"] = core_spkg_list
-@@ -452,6 +455,8 @@ for this_repo in input_config['repos']:
+@@ -452,6 +457,8 @@ for this_repo in input_config['repos']:
            test_ci_bad_binary.append(bbinary)
            test_this_spkg_list[sourcename]['bad_installs'][binarynvr] = bbinary
            print("    Wont Install: " + binarynvr)
