@@ -119,7 +119,7 @@ jobs:
     - name: Download repos output
       uses: actions/download-artifact@v4
       with:
-        path: .
+        path: ./src/willit/
 
     - name: Get image from cache
       id: image-cache
