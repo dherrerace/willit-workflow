@@ -149,6 +149,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
+        repository: ${{ github.actor }}/willit-result
         ref: 'gh-pages'
         path: 'gh-pages'
 
