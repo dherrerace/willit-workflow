@@ -7,7 +7,7 @@ index 12db4d0..2289388 100755
          this_spkg_list[sourcename]['bad_installs'][binarynvr] = bbinary
          print("    Wont Install: " + binarynvr)
 -
-+        if len(ci_bad_binary) >= 2:
++        if len(ci_bad_binary) >= 1:
 +          break
      print("      Failed Installs: " + str(len(ci_bad_binary)))
      this_overall["ci_bnumber_good"] = this_overall["bnumber"] - len(ci_bad_binary)
@@ -16,9 +16,9 @@ index 12db4d0..2289388 100755
                    this_source['binaries'] = old_core_repo["spkg_list"][sourcename]['binaries']
                    this_source['bad_installs'][binarynvr] = bbinary
                    core_spkg_list[sourcename] = this_source
-+              if len(ci_core_bad_binary) >= 2:
++              if len(ci_core_bad_binary) >= 1:
 +                break
-+          if len(ci_core_bad_binary) >= 2:
++          if len(ci_core_bad_binary) >= 1:
 +            break
  
        print("      Failed Core Installs: " + str(len(ci_core_bad_binary)))
@@ -27,7 +27,7 @@ index 12db4d0..2289388 100755
            test_ci_bad_binary.append(bbinary)
            test_this_spkg_list[sourcename]['bad_installs'][binarynvr] = bbinary
            print("    Wont Install: " + binarynvr)
-+          if len(test_ci_bad_binary) >= 2:
++          if len(test_ci_bad_binary) >= 1:
 +            break
            
        print("      Failed Installs: " + str(len(test_ci_bad_binary)))
