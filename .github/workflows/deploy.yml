@@ -152,6 +152,7 @@ jobs:
         repository: ${{ github.actor }}/willit-result
         ref: 'gh-pages'
         path: 'gh-pages'
+        token: ${{ secrets.PAT }}
 
     - name: Download output files
       uses: actions/download-artifact@v4
@@ -162,8 +163,8 @@ jobs:
     - name: Sync web changes
       run: |
         mv willit-output/status-overall.html willit-output/index.html
-        mkdir -p gh-pages/docs/
-        rsync -azhuv --delete-after willit-output/ gh-pages/docs/
+        mkdir -p gh-pages/
+        rsync -azhuv --delete-after willit-output/ gh-pages/
         git -C gh-pages add .
 
     - name: Commit report
