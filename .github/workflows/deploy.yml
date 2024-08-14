@@ -23,7 +23,7 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        dnf -y install jq git nodejs
+        dnf -y install jq git nodejs patch
 
     - uses: actions/checkout@v4
       with:
@@ -43,6 +43,22 @@ jobs:
         bash ./build_image.sh
         mkdir -p ./image
         podman save willit-deploy > ./image/willit-deploy.tar
+
+    - name: Apply willit patches
+      run: |
+        # Apply patches
+        if [ ! -z "./patches" ]; then
+            pushd patches
+            if [ ! -z "$(ls -A */ 2> /dev/null)" ]; then
+                for d in */ ; do
+                    for p in ${d}*.patch; do
+                        echo "patch /opt/patches/$p"
+                        (cd ../src/${d}; patch -p1 < ../../patches/$p)
+                    done
+                done
+            fi
+            popd
+        fi
 
     - name: Get repo names
       id: get-repo-names
