@@ -11,7 +11,7 @@ mkdir -p src
 rsync -azh /opt/orig/willit/ /opt/src/willit/
 
 # Apply patches
-if [ ! -z "./patches" ]; then
+if [ -d "./patches" ]; then
     pushd patches
     if [ ! -z "$(ls -A */ 2> /dev/null)" ]; then
         for d in */ ; do
