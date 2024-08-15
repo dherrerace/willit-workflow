@@ -163,8 +163,9 @@ jobs:
     - name: Sync web changes
       run: |
         mv willit-output/status-overall.html willit-output/index.html
-        mkdir -p gh-pages/
+        mv gh-pages/.git .git
         rsync -azhuv --delete-after willit-output/ gh-pages/
+        mv .git gh-pages/.git
         git -C gh-pages add .
 
     - name: Commit report
