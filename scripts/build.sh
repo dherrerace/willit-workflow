@@ -31,8 +31,10 @@ if ! test -f willit-config.json
 then
     echo === Prepare to merge ===
     mkdir output
+
     # Get all specific repo webpages
     cp -r $(find . -mindepth 2 -maxdepth 2 -type d -iwholename "./output-*") output/
+
     # Merge all status-overall.json files into one
     jq \
         -s add \

@@ -1,8 +1,8 @@
-FROM quay.io/centos/centos:stream9
+FROM quay.io/centos/centos:stream10
 
 RUN dnf -y install 'dnf-command(config-manager)' && \
     dnf -y config-manager --set-enabled crb && \
-    dnf -y install epel-release epel-next-release
+    dnf -y install epel-release
 
 RUN dnf -y install \
         rsync \
